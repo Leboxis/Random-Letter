@@ -3,7 +3,6 @@ import Foundation
 
 enum SoundEffect {
     case letterButton
-    case wheelSpin
     case timerFinished
 }
 
@@ -61,8 +60,6 @@ final class SoundEffectPlayer {
         switch effect {
         case .letterButton:
             duration = 0.10
-        case .wheelSpin:
-            duration = 1.10
         case .timerFinished:
             duration = 0.60
         }
@@ -75,15 +72,6 @@ final class SoundEffectPlayer {
             case .letterButton:
                 let envelope = max(0, 1 - time / duration)
                 sample = sin(2 * .pi * 720 * time) * envelope * 0.22
-
-            case .wheelSpin:
-                let progress = time / duration
-                let frequency = 180 + 520 * progress
-                let envelope = sin(.pi * progress)
-                sample = (
-                    sin(2 * .pi * frequency * time)
-                    + 0.22 * sin(2 * .pi * frequency * 1.92 * time)
-                ) * envelope * 0.13
 
             case .timerFinished:
                 let noteDuration = 0.20
