@@ -2,7 +2,7 @@ import SwiftUI
 
 struct RouletteView: View {
     @Environment(GameViewModel.self) private var viewModel
-    @State private var selectedLetterScale = 0.1
+    @State private var selectedCardScale = 0.1
 
     var body: some View {
         ZStack {
@@ -19,13 +19,13 @@ struct RouletteView: View {
         }
         .onChange(of: viewModel.selected) { _, selectedLetter in
             guard selectedLetter != nil else {
-                selectedLetterScale = 0.1
+                selectedCardScale = 0.1
                 return
             }
 
-            selectedLetterScale = 0.1
+            selectedCardScale = 0.1
             withAnimation(.spring(response: 0.52, dampingFraction: 0.62).delay(0.05)) {
-                selectedLetterScale = 1
+                selectedCardScale = 1
             }
         }
     }
@@ -100,10 +100,10 @@ struct RouletteView: View {
     private func selectedCard(_ letter: String) -> some View {
         VStack(spacing: 4) {
             Text("Ta lettre")
-                .font(.system(size: 16, weight: .bold, design: .rounded))
+                .font(.system(size: 14, weight: .bold, design: .rounded))
                 .foregroundStyle(Color(red: 0.45, green: 0.38, blue: 0.9))
             Text(letter)
-                .font(.system(size: 110, weight: .black, design: .rounded))
+                .font(.system(size: 94, weight: .black, design: .rounded))
                 .foregroundStyle(
                     LinearGradient(
                         colors: [
@@ -114,11 +114,11 @@ struct RouletteView: View {
                         endPoint: .bottom
                     )
                 )
-                .scaleEffect(selectedLetterScale)
         }
-        .frame(width: 230, height: 230)
-        .background(RoundedRectangle(cornerRadius: 36, style: .continuous).fill(.white))
-        .shadow(color: .black.opacity(0.25), radius: 24, y: 10)
+        .frame(width: 190, height: 190)
+        .background(RoundedRectangle(cornerRadius: 30, style: .continuous).fill(.white))
+        .shadow(color: .black.opacity(0.25), radius: 20, y: 8)
+        .scaleEffect(selectedCardScale)
     }
 
     private var controls: some View {
