@@ -12,8 +12,8 @@ final class GameViewModel {
     private(set) var selected: String?
     private(set) var isSpinning = false
     private(set) var wheelRotation: Double = 0
-    private(set) var selectedDuration = 60
-    private(set) var timeRemaining = 60
+    private(set) var selectedDuration: Int?
+    private(set) var timeRemaining: Int?
 
     private var spinToken = UUID()
     private var timerTask: Task<Void, Never>?
@@ -27,6 +27,8 @@ final class GameViewModel {
 
         stopTimer()
         timeRemaining = selectedDuration
+        SoundEffectPlayer.shared.play(.letterButton)
+        SoundEffectPlayer.shared.play(.wheelSpin)
 
         let token = UUID()
         spinToken = token
@@ -58,8 +60,8 @@ final class GameViewModel {
         }
     }
 
-    func setDuration(_ seconds: Int) {
-        guard TimerPickerView.durations.contains(seconds) else { return }
+    func setDuration(_ seconds: Int?) {
+        guard seconds == nil || TimerPickerView.durations.contains(seconds!) else { return }
 
         selectedDuration = seconds
         timeRemaining = seconds
@@ -80,6 +82,8 @@ final class GameViewModel {
     }
 
     private func startTimer() {
+        guard let selectedDuration else { return }
+
         stopTimer()
         timeRemaining = selectedDuration
 
@@ -87,9 +91,13 @@ final class GameViewModel {
             while !Task.isCancelled {
                 try? await Task.sleep(for: .seconds(1))
                 guard !Task.isCancelled, let self else { return }
+                guard let timeRemaining, timeRemaining > 0 else { return }
 
-                guard timeRemaining > 0 else { return }
-                timeRemaining -= 1
+                self.timeRemaining = timeRemaining - 1
+                if timeRemaining == 1 {
+                    SoundEffectPlayer.shared.play(.timerFinished)
+                    return
+                }
             }
         }
     }
