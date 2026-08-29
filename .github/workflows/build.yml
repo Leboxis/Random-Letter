@@ -5,6 +5,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: macos-15
@@ -32,3 +35,17 @@ jobs:
         with:
           name: RandomLetter-ipa
           path: RandomLetter.ipa
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=$(awk -F'"' '/MARKETING_VERSION:/ { print $2; exit }' project.yml)
+          TAG="v$VERSION"
+          TITLE="Random Letter $TAG"
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" RandomLetter.ipa --clobber
+          else
+            gh release create "$TAG" RandomLetter.ipa --title "$TITLE" --generate-notes
+          fi
