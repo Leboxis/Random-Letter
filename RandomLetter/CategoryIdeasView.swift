@@ -57,19 +57,21 @@ struct CategoryIdeasView: View {
     }
 
     private func categoryCard(_ category: CategoryIdea) -> some View {
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(spacing: 14) {
             Image(systemName: category.icon)
                 .font(.system(size: 24, weight: .bold))
                 .foregroundStyle(category.color)
                 .frame(width: 46, height: 46)
                 .background(Circle().fill(category.color.opacity(0.14)))
+                .frame(maxWidth: .infinity)
 
             Text(category.title)
                 .font(.system(size: 16, weight: .bold, design: .rounded))
                 .foregroundStyle(.primary)
-                .multilineTextAlignment(.leading)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
         }
-        .frame(maxWidth: .infinity, minHeight: 132, alignment: .leading)
+        .frame(maxWidth: .infinity, minHeight: 132)
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 22, style: .continuous)
