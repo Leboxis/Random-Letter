@@ -2,6 +2,7 @@ import SwiftUI
 
 struct RouletteView: View {
     @Environment(GameViewModel.self) private var viewModel
+    @State private var selectedLetterScale = 0.1
 
     var body: some View {
         ZStack {
@@ -15,6 +16,17 @@ struct RouletteView: View {
             }
             .padding(.horizontal, 24)
             .padding(.vertical, 12)
+        }
+        .onChange(of: viewModel.selected) { _, selectedLetter in
+            guard selectedLetter != nil else {
+                selectedLetterScale = 0.1
+                return
+            }
+
+            selectedLetterScale = 0.1
+            withAnimation(.spring(response: 0.52, dampingFraction: 0.62).delay(0.05)) {
+                selectedLetterScale = 1
+            }
         }
     }
 
@@ -102,13 +114,11 @@ struct RouletteView: View {
                         endPoint: .bottom
                     )
                 )
+                .scaleEffect(selectedLetterScale)
         }
         .frame(width: 230, height: 230)
         .background(RoundedRectangle(cornerRadius: 36, style: .continuous).fill(.white))
         .shadow(color: .black.opacity(0.25), radius: 24, y: 10)
-        .scaleEffect(viewModel.selected == nil ? 0.001 : 1)
-        .opacity(viewModel.selected == nil ? 0 : 1)
-        .animation(.spring(response: 0.5, dampingFraction: 0.65), value: viewModel.selected)
     }
 
     private var controls: some View {
