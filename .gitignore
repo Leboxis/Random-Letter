@@ -1,0 +1,14 @@
+# Xcode / builds
+build/
+DerivedData/
+*.xcodeproj
+xcuserdata/
+*.xcworkspace/xcuserdata/
+
+# macOS
+.DS_Store
+
+# Packaging
+Payload/
+*.ipa
+*.zip
