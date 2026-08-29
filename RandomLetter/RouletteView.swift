@@ -4,6 +4,7 @@ struct RouletteView: View {
     @Environment(GameViewModel.self) private var viewModel
     @State private var selectedCardScale = 0.1
     @State private var isTimerPickerPresented = false
+    @State private var isCategoryIdeasPresented = false
 
     var body: some View {
         ZStack {
@@ -22,6 +23,9 @@ struct RouletteView: View {
             TimerPickerView(duration: viewModel.selectedDuration) { duration in
                 viewModel.setDuration(duration)
             }
+        }
+        .sheet(isPresented: $isCategoryIdeasPresented) {
+            CategoryIdeasView()
         }
         .onChange(of: viewModel.selected) { _, selectedLetter in
             guard selectedLetter != nil else {
@@ -60,7 +64,7 @@ struct RouletteView: View {
     }
 
     private var header: some View {
-        ZStack(alignment: .topLeading) {
+        ZStack {
             VStack(spacing: 3) {
                 Text("Random Letter")
                     .font(.system(size: 30, weight: .heavy, design: .rounded))
@@ -81,19 +85,32 @@ struct RouletteView: View {
             }
             .frame(maxWidth: .infinity)
 
-            Button {
-                isTimerPickerPresented = true
-            } label: {
-                Image(systemName: "timer")
-                    .font(.system(size: 18, weight: .bold))
-                    .foregroundStyle(Color(red: 0.45, green: 0.38, blue: 0.9))
-                    .frame(width: 44, height: 44)
-                    .background(Circle().fill(.white))
-                    .shadow(color: .black.opacity(0.18), radius: 8, y: 4)
+            HStack {
+                roundHeaderButton(systemImage: "timer", action: {
+                    isTimerPickerPresented = true
+                })
+                .accessibilityLabel("Choisir le temps")
+
+                Spacer()
+
+                roundHeaderButton(systemImage: "rectangle.grid.2x2.fill", action: {
+                    isCategoryIdeasPresented = true
+                })
+                .accessibilityLabel("Voir les idées de catégories")
             }
-            .accessibilityLabel("Choisir le temps")
         }
         .padding(.top, 14)
+    }
+
+    private func roundHeaderButton(systemImage: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: systemImage)
+                .font(.system(size: 17, weight: .bold))
+                .foregroundStyle(Color(red: 0.45, green: 0.38, blue: 0.9))
+                .frame(width: 44, height: 44)
+                .background(Circle().fill(.white))
+                .shadow(color: .black.opacity(0.18), radius: 8, y: 4)
+        }
     }
 
     private var wheelSection: some View {
