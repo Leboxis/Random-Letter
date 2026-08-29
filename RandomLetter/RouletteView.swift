@@ -3,6 +3,7 @@ import SwiftUI
 struct RouletteView: View {
     @Environment(GameViewModel.self) private var viewModel
     @State private var selectedCardScale = 0.1
+    @State private var isTimerPickerPresented = false
 
     var body: some View {
         ZStack {
@@ -16,6 +17,11 @@ struct RouletteView: View {
             }
             .padding(.horizontal, 24)
             .padding(.vertical, 12)
+        }
+        .sheet(isPresented: $isTimerPickerPresented) {
+            TimerPickerView(duration: viewModel.selectedDuration) { duration in
+                viewModel.setDuration(duration)
+            }
         }
         .onChange(of: viewModel.selected) { _, selectedLetter in
             guard selectedLetter != nil else {
@@ -54,13 +60,35 @@ struct RouletteView: View {
     }
 
     private var header: some View {
-        VStack(spacing: 4) {
-            Text("Random Letter")
-                .font(.system(size: 32, weight: .heavy, design: .rounded))
-                .foregroundStyle(.white)
-            Text("La roulette du petit bac")
-                .font(.system(size: 15, weight: .medium, design: .rounded))
-                .foregroundStyle(.white.opacity(0.85))
+        ZStack(alignment: .topLeading) {
+            VStack(spacing: 3) {
+                Text("Random Letter")
+                    .font(.system(size: 30, weight: .heavy, design: .rounded))
+                    .foregroundStyle(.white)
+                Text("La roulette du petit bac")
+                    .font(.system(size: 15, weight: .medium, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.85))
+                Text(viewModel.timeRemaining.timerText)
+                    .font(.system(size: 34, weight: .black, design: .rounded))
+                    .monospacedDigit()
+                    .foregroundStyle(.white)
+                    .contentTransition(.numericText())
+                    .animation(.snappy, value: viewModel.timeRemaining)
+                    .accessibilityLabel("Chronomètre : \(viewModel.timeRemaining.timerText)")
+            }
+            .frame(maxWidth: .infinity)
+
+            Button {
+                isTimerPickerPresented = true
+            } label: {
+                Image(systemName: "timer")
+                    .font(.system(size: 18, weight: .bold))
+                    .foregroundStyle(Color(red: 0.45, green: 0.38, blue: 0.9))
+                    .frame(width: 44, height: 44)
+                    .background(Circle().fill(.white))
+                    .shadow(color: .black.opacity(0.18), radius: 8, y: 4)
+            }
+            .accessibilityLabel("Choisir le temps")
         }
         .padding(.top, 14)
     }

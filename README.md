@@ -4,6 +4,8 @@ Application iPhone (SwiftUI) pour tirer au sort une lettre du jeu du **petit bac
 
 - Appuie sur le bouton pour faire tourner la roulette et obtenir une lettre.
 - Une lettre déjà tirée ne peut plus réapparaître.
+- Utilise le bouton rond avec l’icône de chronomètre, en haut à gauche, pour choisir la durée de la manche.
+- La roue de sélection du temps fournit un retour haptique léger ; le compte à rebours commence lorsque la lettre apparaît.
 - Bouton **Réinitialiser** pour recommencer une nouvelle partie.
 - Onglet **Lettres** : toutes les lettres déjà apparues et celles restantes.
 - Onglet **À propos** : auteur et numéro de version.
@@ -40,9 +42,10 @@ Structure :
 ```
 RandomLetter/
 ├── RandomLetterApp.swift   # entrée de l'app
-├── GameViewModel.swift     # logique (tirage, roulette, reset)
+├── GameViewModel.swift     # logique (tirage, chrono, reset)
 ├── ContentView.swift       # barre d'onglets
 ├── RouletteView.swift      # roulette + boutons
-└── LettersView.swift       # lettres tirées / restantes
+├── TimerPickerView.swift   # roue de sélection du chrono
+├── LettersView.swift       # lettres tirées / restantes
 └── .github/workflows/build.yml  # build GitHub Actions
 ```
