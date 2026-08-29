@@ -6,6 +6,7 @@ Application iPhone (SwiftUI) pour tirer au sort une lettre du jeu du **petit bac
 - Une lettre déjà tirée ne peut plus réapparaître.
 - Bouton **Réinitialiser** pour recommencer une nouvelle partie.
 - Onglet **Lettres** : toutes les lettres déjà apparues et celles restantes.
+- Onglet **À propos** : auteur et numéro de version.
 - Design sobre mais fun, avec dégradés et animations.
 
 ## Fonctionnement

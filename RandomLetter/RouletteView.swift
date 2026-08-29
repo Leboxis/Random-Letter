@@ -59,18 +59,6 @@ struct RouletteView: View {
             if let letter = viewModel.selected {
                 selectedCard(letter)
             }
-            if viewModel.isSpinning {
-                VStack(spacing: 12) {
-                    ProgressView()
-                        .controlSize(.large)
-                        .tint(.white)
-                    Text("Tirage en cours…")
-                        .font(.system(size: 15, weight: .semibold, design: .rounded))
-                        .foregroundStyle(.white)
-                }
-                .padding(28)
-                .background(RoundedRectangle(cornerRadius: 26, style: .continuous).fill(.black.opacity(0.28)))
-            }
         }
         .frame(width: 300, height: 300)
     }
@@ -92,15 +80,6 @@ struct RouletteView: View {
                     .rotationEffect(.degrees(-viewModel.wheelRotation))
                     .position(x: 150 + cos(angle) * 120, y: 150 + sin(angle) * 120)
             }
-            Circle()
-                .fill(Color.white.opacity(0.2))
-                .frame(width: 64, height: 64)
-                .overlay(
-                    Image(systemName: viewModel.isSpinning ? "questionmark" : "dice")
-                        .font(.system(size: 24, weight: .bold))
-                        .foregroundStyle(.white)
-                )
-                .rotationEffect(.degrees(-viewModel.wheelRotation))
         }
         .frame(width: 300, height: 300)
         .rotationEffect(.degrees(viewModel.wheelRotation))

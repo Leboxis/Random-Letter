@@ -11,6 +11,10 @@ struct ContentView: View {
                 .tabItem {
                     Label("Lettres", systemImage: "textformat.abc")
                 }
+            AboutView()
+                .tabItem {
+                    Label("À propos", systemImage: "info.circle")
+                }
         }
         .tint(Color(red: 0.45, green: 0.38, blue: 0.9))
     }
