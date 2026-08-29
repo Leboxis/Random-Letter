@@ -79,7 +79,7 @@ final class SoundEffectPlayer {
                 let frequencies = [659.25, 783.99, 1_046.5]
                 let noteTime = time.truncatingRemainder(dividingBy: noteDuration)
                 let envelope = max(0, 1 - noteTime / noteDuration)
-                sample = sin(2 * .pi * frequencies[noteIndex] * time) * envelope * 0.26
+                sample = sin(2 * .pi * frequencies[noteIndex] * noteTime) * envelope * 0.26
             }
 
             let clamped = max(-1, min(1, sample))

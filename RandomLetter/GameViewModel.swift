@@ -39,7 +39,8 @@ final class GameViewModel {
         var remainder = (-Double(index) * step).truncatingRemainder(dividingBy: 360)
         if remainder < 0 { remainder += 360 }
         let turns = Double(Int.random(in: 5...8)) * 360
-        let target = wheelRotation + turns + remainder
+        let base = wheelRotation - wheelRotation.truncatingRemainder(dividingBy: 360)
+        let target = base + turns + remainder
 
         withAnimation(.easeInOut(duration: 2.3)) {
             wheelRotation = target
