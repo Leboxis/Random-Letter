@@ -68,13 +68,16 @@ struct RouletteView: View {
                 Text("La roulette du petit bac")
                     .font(.system(size: 15, weight: .medium, design: .rounded))
                     .foregroundStyle(.white.opacity(0.85))
-                Text(viewModel.timeRemaining.timerText)
-                    .font(.system(size: 34, weight: .black, design: .rounded))
-                    .monospacedDigit()
-                    .foregroundStyle(.white)
-                    .contentTransition(.numericText())
-                    .animation(.snappy, value: viewModel.timeRemaining)
-                    .accessibilityLabel("Chronomètre : \(viewModel.timeRemaining.timerText)")
+
+                if let timeRemaining = viewModel.timeRemaining {
+                    Text(timeRemaining.timerText)
+                        .font(.system(size: 34, weight: .black, design: .rounded))
+                        .monospacedDigit()
+                        .foregroundStyle(.white)
+                        .contentTransition(.numericText())
+                        .animation(.snappy, value: timeRemaining)
+                        .accessibilityLabel("Chronomètre : \(timeRemaining.timerText)")
+                }
             }
             .frame(maxWidth: .infinity)
 
