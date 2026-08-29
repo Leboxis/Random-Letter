@@ -5,10 +5,10 @@ struct TimerPickerView: View {
 
     @Environment(\.dismiss) private var dismiss
     @State private var selectedDuration: Int
-    private let onSelect: (Int) -> Void
+    private let onSelect: (Int?) -> Void
 
-    init(duration: Int, onSelect: @escaping (Int) -> Void) {
-        _selectedDuration = State(initialValue: duration)
+    init(duration: Int?, onSelect: @escaping (Int?) -> Void) {
+        _selectedDuration = State(initialValue: duration ?? 0)
         self.onSelect = onSelect
     }
 
@@ -20,13 +20,15 @@ struct TimerPickerView: View {
                     .multilineTextAlignment(.center)
                     .padding(.top, 20)
 
-                Text("Le compte à rebours démarre quand la lettre est révélée.")
+                Text("Le chronomètre est désactivé par défaut.")
                     .font(.system(size: 15, weight: .medium, design: .rounded))
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 24)
 
                 Picker("Durée", selection: $selectedDuration) {
+                    Text("Désactivé").tag(0)
+
                     ForEach(Self.durations, id: \.self) { duration in
                         Text(duration.timerText)
                             .font(.system(size: 28, weight: .bold, design: .rounded))
@@ -38,7 +40,7 @@ struct TimerPickerView: View {
                 .frame(height: 210)
                 .sensoryFeedback(.selection, trigger: selectedDuration)
                 .onChange(of: selectedDuration) { _, duration in
-                    onSelect(duration)
+                    onSelect(duration == 0 ? nil : duration)
                 }
 
                 Spacer()
