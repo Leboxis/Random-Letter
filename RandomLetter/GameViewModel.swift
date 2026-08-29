@@ -28,7 +28,6 @@ final class GameViewModel {
         stopTimer()
         timeRemaining = selectedDuration
         SoundEffectPlayer.shared.play(.letterButton)
-        SoundEffectPlayer.shared.play(.wheelSpin)
 
         let token = UUID()
         spinToken = token
