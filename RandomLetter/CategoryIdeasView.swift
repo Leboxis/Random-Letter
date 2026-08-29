@@ -7,14 +7,18 @@ struct CategoryIdeasView: View {
         .init(title: "Prénom fille", icon: "person.fill", color: .pink),
         .init(title: "Prénom garçon", icon: "person.fill", color: .blue),
         .init(title: "Fruits et légumes", icon: "carrot.fill", color: .orange),
+        .init(title: "Animaux", icon: "pawprint.fill", color: .green),
         .init(title: "Pays / ville", icon: "globe.europe.africa.fill", color: .indigo),
         .init(title: "Fleurs", icon: "camera.macro", color: .purple),
         .init(title: "Marques", icon: "tag.fill", color: .red),
         .init(title: "Célébrités", icon: "star.fill", color: .yellow),
         .init(title: "Personnages fictifs", icon: "theatermasks.fill", color: .mint),
+        .init(title: "Super-héros", icon: "bolt.shield.fill", color: .blue),
         .init(title: "Films / séries", icon: "film.fill", color: .teal),
+        .init(title: "Jeux vidéo", icon: "gamecontroller.fill", color: .indigo),
         .init(title: "Parties du corps humain", icon: "figure.stand", color: .cyan),
-        .init(title: "Métiers", icon: "briefcase.fill", color: .brown)
+        .init(title: "Métiers", icon: "briefcase.fill", color: .brown),
+        .init(title: "Objets", icon: "cube.box.fill", color: .gray)
     ]
 
     private let columns = [
